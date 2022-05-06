@@ -7,16 +7,19 @@
         </v-row>
         <v-row>
             <v-col class="text-center" cols="8" offset="2" sm="6" offset-sm="3">
-                <form >
-                    <v-text-field name="Email" label="이메일" type="email" required></v-text-field>
-                    <v-text-field name="password" label="비밀번호" type="password" required></v-text-field>
+                <form @submit.prevent="fnRegisterUser">
+                    <v-text-field name="Email" label="이메일" type="email" 
+                    v-model="sEmail" required></v-text-field>
+                    <v-text-field name="password" label="비밀번호" type="password" 
+                    v-model="sPassword" required></v-text-field>
                     
                     <!-- 비밀번호 확인 : rules 속성 -->
-                    <v-text-field name="ConfirmPassword" label="비밀번호 확인" type="password" required
-                    :rules="[true]">
+                    <v-text-field name="ConfirmPassword" label="비밀번호 확인" type="password" 
+                    v-model="sConfirmPassword" required
+                    :rules="[fnComparePassword]">
                     </v-text-field>
                     
-                    <v-btn color="orange" dark v-if="!loading">회원가입</v-btn>
+                    <v-btn type="submit" color="orange" dark v-if="!loading">회원가입</v-btn>
 
                     <!-- 시간지연의 경우 회전 프로그레스 원 표시 -->
                     <v-progress-circular v-if="loading"
@@ -33,7 +36,27 @@
 export default {
     data () {
         return {
+            sEmail :'',
+            sPassword:"",
+            sConfirmPassword :'',
             loading : false
+        }
+    },
+    computed : {
+        fnComparePassword(){
+            if(this.sPassword == this.sConfirmPassword) {
+                return true
+            }else return '비밀번호가 일치하지않습니다'
+        }
+    },
+    methods : {
+        fnRegisterUser() {
+            if(this.fnComparePassword == true) {
+                this.$store.dispatch('fnRegisterUser', {
+                    pEmail : this.sEmail,
+                    pPassword : this.sPassword
+                })
+            }
         }
     }
 }

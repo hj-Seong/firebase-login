@@ -9,11 +9,11 @@
         <v-row>
             <v-col cols="10" offset="1" class="text-center mt-5">
                 <!--구글 로그인인 경우 사진 이미지 정보 표시-->
-                <img src="" alt="">
+                <img v-if="fnGetUser.photoURL" :src="fnGetUser.photoURL" class="avatar_style" alt="">
                 <!-- 계정 이름 표시 -->
-                <h3 class="pt-2 mt-4 grey lighten-2">이름</h3>
+                <h3 class="pt-2 mt-4 grey lighten-2">{{fnGetUser.name}}</h3>
                 <!-- 계정 이메일 표시 -->
-                <p class="pb-2 grey lighten-2">이메일</p>
+                <p class="pb-2 grey lighten-2">{{fnGetUser.email}}</p>
             </v-col>
             <v-col cols="6" offset="3" class="text-center mt-1">
                 <v-btn color="orange" large dark block>
@@ -24,3 +24,21 @@
         </v-row>
     </v-container>
 </template>
+<script>
+export default {
+    computed : {
+        fnGetUser(){
+            let oUserInfo = this.$store.getters.fnGetUser
+            return oUserInfo
+        }
+    }
+}
+</script>
+
+<style scoped>
+    .avatar_style {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+</style>

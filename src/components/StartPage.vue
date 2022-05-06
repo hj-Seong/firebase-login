@@ -12,7 +12,7 @@
                 </v-progress-circular>
             </v-col>
             <v-col cols="6" offset="3" class="text-center mt-5">
-                <v-btn outlined color="red" large dark block>
+                <v-btn @click="fnDoGoogleLogin_Popup" outlined color="red" large dark block>
                     <v-icon>mdi-google</v-icon>
                     구글 로그인
                 </v-btn>
@@ -32,6 +32,12 @@ export default {
     data () {
         return {
             loading : false
+        }
+    },
+    methods : {
+        fnDoGoogleLogin_Popup() {
+            //스토어에 있는 구글계정 로그인 처리요청
+            this.$store.dispatch('fnDoGoogleLogin_Popup');
         }
     }
 }

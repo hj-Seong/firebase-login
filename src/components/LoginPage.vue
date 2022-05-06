@@ -7,10 +7,12 @@
         </v-row>
         <v-row>
             <v-col class="text-center" cols="8" offset="2" sm="6" offset-sm="3">
-                <form >
-                    <v-text-field name="Email" label="이메일" type="email" required></v-text-field>
-                    <v-text-field name="password" label="비밀번호" type="password" required></v-text-field>
-                    <v-btn color="orange" dark v-if="!loading">로그인</v-btn>
+                <form @submit.prevent="DoLogin">
+                    <v-text-field name="Email" label="이메일" type="email" required 
+                    v-model="sEmail"></v-text-field>
+                    <v-text-field name="password" label="비밀번호" type="password" required 
+                    v-model="sPassword"></v-text-field>
+                    <v-btn type="submit" color="orange" dark v-if="!loading">로그인</v-btn>
 
                     <!-- 시간지연의 경우 회전 프로그레스 원 표시 -->
                     <v-progress-circular v-if="loading"
@@ -28,7 +30,17 @@
 export default {
     data() {
         return {
+            sEmail : '',
+            sPassword: '',
             loading: false,
+        }
+    },
+    methods : {
+        DoLogin() {
+            this.$store.dispatch('DoLogin',{
+                pEmail : this.sEmail,
+                pPassword : this.sPassword
+            })
         }
     }
 }
